@@ -32,6 +32,12 @@ namespace WinFormsApp_BookManagementSystem
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dtgrdDisplayBook = new System.Windows.Forms.DataGridView();
             this.grpEditor = new System.Windows.Forms.GroupBox();
+            this.grpSelect = new System.Windows.Forms.GroupBox();
+            this.lblISBNToSelect = new System.Windows.Forms.Label();
+            this.btnSelectThisRecord = new System.Windows.Forms.Button();
+            this.lblSelectMessage = new System.Windows.Forms.Label();
+            this.txtISBNToSelect = new System.Windows.Forms.TextBox();
+            this.lblUpdateMessage = new System.Windows.Forms.Label();
             this.btnDeleteBook = new System.Windows.Forms.Button();
             this.btnEditBook = new System.Windows.Forms.Button();
             this.lblWhatToDo = new System.Windows.Forms.Label();
@@ -47,13 +53,9 @@ namespace WinFormsApp_BookManagementSystem
             this.cmboWhatToDo = new System.Windows.Forms.ComboBox();
             this.btnAddBook = new System.Windows.Forms.Button();
             this.lblRecordsDisplay = new System.Windows.Forms.Label();
-            this.btnSelectThisRecord = new System.Windows.Forms.Button();
-            this.lblSelectMessage = new System.Windows.Forms.Label();
-            this.txtISBNToSelect = new System.Windows.Forms.TextBox();
-            this.lblISBNToSelect = new System.Windows.Forms.Label();
-            this.lblUpdateMessage = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dtgrdDisplayBook)).BeginInit();
             this.grpEditor.SuspendLayout();
+            this.grpSelect.SuspendLayout();
             this.tblFormFields.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,11 +72,8 @@ namespace WinFormsApp_BookManagementSystem
             // 
             // grpEditor
             // 
+            this.grpEditor.Controls.Add(this.grpSelect);
             this.grpEditor.Controls.Add(this.lblUpdateMessage);
-            this.grpEditor.Controls.Add(this.lblISBNToSelect);
-            this.grpEditor.Controls.Add(this.btnSelectThisRecord);
-            this.grpEditor.Controls.Add(this.lblSelectMessage);
-            this.grpEditor.Controls.Add(this.txtISBNToSelect);
             this.grpEditor.Controls.Add(this.btnDeleteBook);
             this.grpEditor.Controls.Add(this.btnEditBook);
             this.grpEditor.Controls.Add(this.lblWhatToDo);
@@ -89,6 +88,77 @@ namespace WinFormsApp_BookManagementSystem
             this.grpEditor.Size = new System.Drawing.Size(228, 573);
             this.grpEditor.TabIndex = 1;
             this.grpEditor.TabStop = false;
+            // 
+            // grpSelect
+            // 
+            this.grpSelect.Controls.Add(this.lblISBNToSelect);
+            this.grpSelect.Controls.Add(this.btnSelectThisRecord);
+            this.grpSelect.Controls.Add(this.lblSelectMessage);
+            this.grpSelect.Controls.Add(this.txtISBNToSelect);
+            this.grpSelect.Location = new System.Drawing.Point(15, 94);
+            this.grpSelect.Name = "grpSelect";
+            this.grpSelect.Size = new System.Drawing.Size(203, 126);
+            this.grpSelect.TabIndex = 19;
+            this.grpSelect.TabStop = false;
+            this.grpSelect.Visible = false;
+            // 
+            // lblISBNToSelect
+            // 
+            this.lblISBNToSelect.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.lblISBNToSelect.AutoSize = true;
+            this.lblISBNToSelect.Location = new System.Drawing.Point(5, 62);
+            this.lblISBNToSelect.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblISBNToSelect.Name = "lblISBNToSelect";
+            this.lblISBNToSelect.Size = new System.Drawing.Size(32, 13);
+            this.lblISBNToSelect.TabIndex = 11;
+            this.lblISBNToSelect.Text = "ISBN";
+            // 
+            // btnSelectThisRecord
+            // 
+            this.btnSelectThisRecord.Location = new System.Drawing.Point(55, 87);
+            this.btnSelectThisRecord.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btnSelectThisRecord.Name = "btnSelectThisRecord";
+            this.btnSelectThisRecord.Size = new System.Drawing.Size(129, 24);
+            this.btnSelectThisRecord.TabIndex = 16;
+            this.btnSelectThisRecord.Text = "Select this Record";
+            this.btnSelectThisRecord.UseVisualStyleBackColor = true;
+            this.btnSelectThisRecord.Click += new System.EventHandler(this.btnSelectThisRecord_Click);
+            // 
+            // lblSelectMessage
+            // 
+            this.lblSelectMessage.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.lblSelectMessage.AutoSize = true;
+            this.lblSelectMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.lblSelectMessage.Location = new System.Drawing.Point(2, 8);
+            this.lblSelectMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSelectMessage.Name = "lblSelectMessage";
+            this.lblSelectMessage.Size = new System.Drawing.Size(182, 39);
+            this.lblSelectMessage.TabIndex = 15;
+            this.lblSelectMessage.Text = "Enter the ISBN for the record you \r\nwish to update below or select it\r\nfrom the R" +
+    "ecords display grid -->";
+            // 
+            // txtISBNToSelect
+            // 
+            this.txtISBNToSelect.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.txtISBNToSelect.Location = new System.Drawing.Point(45, 59);
+            this.txtISBNToSelect.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.txtISBNToSelect.Name = "txtISBNToSelect";
+            this.txtISBNToSelect.ReadOnly = true;
+            this.txtISBNToSelect.Size = new System.Drawing.Size(153, 22);
+            this.txtISBNToSelect.TabIndex = 17;
+            // 
+            // lblUpdateMessage
+            // 
+            this.lblUpdateMessage.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.lblUpdateMessage.AutoSize = true;
+            this.lblUpdateMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.lblUpdateMessage.Location = new System.Drawing.Point(16, 223);
+            this.lblUpdateMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblUpdateMessage.Name = "lblUpdateMessage";
+            this.lblUpdateMessage.Size = new System.Drawing.Size(94, 13);
+            this.lblUpdateMessage.TabIndex = 18;
+            this.lblUpdateMessage.Text = "Update Message";
+            this.lblUpdateMessage.Visible = false;
             // 
             // btnDeleteBook
             // 
@@ -269,68 +339,6 @@ namespace WinFormsApp_BookManagementSystem
             this.lblRecordsDisplay.TabIndex = 16;
             this.lblRecordsDisplay.Text = "Records Display";
             // 
-            // btnSelectThisRecord
-            // 
-            this.btnSelectThisRecord.Location = new System.Drawing.Point(65, 184);
-            this.btnSelectThisRecord.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.btnSelectThisRecord.Name = "btnSelectThisRecord";
-            this.btnSelectThisRecord.Size = new System.Drawing.Size(129, 24);
-            this.btnSelectThisRecord.TabIndex = 17;
-            this.btnSelectThisRecord.Text = "Select this Record";
-            this.btnSelectThisRecord.UseVisualStyleBackColor = true;
-            this.btnSelectThisRecord.Visible = false;
-            this.btnSelectThisRecord.Click += new System.EventHandler(this.btnSelectThisRecord_Click);
-            // 
-            // lblSelectMessage
-            // 
-            this.lblSelectMessage.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.lblSelectMessage.AutoSize = true;
-            this.lblSelectMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.lblSelectMessage.Location = new System.Drawing.Point(12, 105);
-            this.lblSelectMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblSelectMessage.Name = "lblSelectMessage";
-            this.lblSelectMessage.Size = new System.Drawing.Size(182, 39);
-            this.lblSelectMessage.TabIndex = 15;
-            this.lblSelectMessage.Text = "Enter the ISBN for the record you \r\nwish to update below or select it\r\nfrom the R" +
-    "ecords display grid -->";
-            this.lblSelectMessage.Visible = false;
-            // 
-            // txtISBNToSelect
-            // 
-            this.txtISBNToSelect.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.txtISBNToSelect.Location = new System.Drawing.Point(57, 156);
-            this.txtISBNToSelect.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.txtISBNToSelect.Name = "txtISBNToSelect";
-            this.txtISBNToSelect.Size = new System.Drawing.Size(153, 22);
-            this.txtISBNToSelect.TabIndex = 16;
-            this.txtISBNToSelect.Visible = false;
-            this.txtISBNToSelect.TextChanged += new System.EventHandler(this.txtISBNToSelect_TextChanged);
-            // 
-            // lblISBNToSelect
-            // 
-            this.lblISBNToSelect.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.lblISBNToSelect.AutoSize = true;
-            this.lblISBNToSelect.Location = new System.Drawing.Point(15, 159);
-            this.lblISBNToSelect.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblISBNToSelect.Name = "lblISBNToSelect";
-            this.lblISBNToSelect.Size = new System.Drawing.Size(32, 13);
-            this.lblISBNToSelect.TabIndex = 11;
-            this.lblISBNToSelect.Text = "ISBN";
-            this.lblISBNToSelect.Visible = false;
-            // 
-            // lblUpdateMessage
-            // 
-            this.lblUpdateMessage.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.lblUpdateMessage.AutoSize = true;
-            this.lblUpdateMessage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.lblUpdateMessage.Location = new System.Drawing.Point(16, 223);
-            this.lblUpdateMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblUpdateMessage.Name = "lblUpdateMessage";
-            this.lblUpdateMessage.Size = new System.Drawing.Size(94, 13);
-            this.lblUpdateMessage.TabIndex = 18;
-            this.lblUpdateMessage.Text = "Update Message";
-            this.lblUpdateMessage.Visible = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -349,6 +357,8 @@ namespace WinFormsApp_BookManagementSystem
             ((System.ComponentModel.ISupportInitialize)(this.dtgrdDisplayBook)).EndInit();
             this.grpEditor.ResumeLayout(false);
             this.grpEditor.PerformLayout();
+            this.grpSelect.ResumeLayout(false);
+            this.grpSelect.PerformLayout();
             this.tblFormFields.ResumeLayout(false);
             this.tblFormFields.PerformLayout();
             this.ResumeLayout(false);
@@ -380,6 +390,7 @@ namespace WinFormsApp_BookManagementSystem
         private System.Windows.Forms.Label lblSelectMessage;
         private System.Windows.Forms.TextBox txtISBNToSelect;
         private System.Windows.Forms.Label lblUpdateMessage;
+        private System.Windows.Forms.GroupBox grpSelect;
     }
 }
 

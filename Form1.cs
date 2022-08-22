@@ -17,56 +17,47 @@ namespace WinFormsApp_BookManagementSystem
         {
             InitializeComponent();
         }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            bookRepo = new BookRepo();
+            dtgrdDisplayBook.DataSource = bookRepo.GetAllRecords();
+        }
 
         private void cmboWhatToDo_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch(cmboWhatToDo.Text)
             {
                 case "Add a New Book":
-                    lblSelectMessage.Visible = false;
-                    lblISBNToSelect.Visible = false;
-                    txtISBNToSelect.Visible = false;
-                    btnSelectThisRecord.Visible = false;
+                    grpSelect.Visible = false;
                     lblUpdateMessage.Text = "Please enter the book info\nbelow and then click\nthe Add Book button";
+                    tblFormFields.Enabled = true;
                     tblFormFields.Visible = true;
                     btnAddBook.Visible = true;
                     btnEditBook.Visible = false;
                     btnDeleteBook.Visible = false;
                     break;
                 case "Edit a Book":
-                    lblSelectMessage.Visible = true;
-                    lblSelectMessage.Text = "Enter the ISBN for the record you \nwish to update below or select it \nfrom the Records Display grid -->";
-                    lblISBNToSelect.Visible = true;
-                    txtISBNToSelect.Visible = true;
-                    btnSelectThisRecord.Visible = true;
+                    grpSelect.Visible = true;
+                    lblSelectMessage.Text = "Select the ISBN for the record you \nwish to update from the \nRecords Display grid -->";
                     btnSelectThisRecord.Text = "Edit this Record";
-                    //lblUpdateMessage.Text = "Below is the record you selected.\nEdit the fields that need to\nbe updated and the click the \nEdit Book button";
-                    lblUpdateMessage.Visible = false;
-                    tblFormFields.Visible = false;
-                    btnAddBook.Visible = false;
-                    btnEditBook.Visible = false;
-                    btnDeleteBook.Visible = false;
+                    MakeBottomInvisible();
                     break;
                 case "Delete a Book":
-                    lblSelectMessage.Visible = true;
-                    lblSelectMessage.Text = "Enter the ISBN for the record you \nwish to delete below or select it \nfrom the Records Display grid -->";
-                    lblISBNToSelect.Visible = true;
-                    txtISBNToSelect.Visible = true;
-                    btnSelectThisRecord.Visible = true;
+                    grpSelect.Visible = true;
+                    lblSelectMessage.Text = "Select the ISBN for the record you \nwish to delete from the \nRecords Display grid -->";
                     btnSelectThisRecord.Text = "Delete this Record";
-                    lblUpdateMessage.Visible = false;
-                    tblFormFields.Visible = false;
-                    btnAddBook.Visible = false;
-                    btnEditBook.Visible = false;
-                    btnDeleteBook.Visible = false;
+                    MakeBottomInvisible();
                     break;
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        void MakeBottomInvisible()
         {
-            bookRepo = new BookRepo();
-            dtgrdDisplayBook.DataSource = bookRepo.GetAllRecords();
+            lblUpdateMessage.Visible = false;
+            tblFormFields.Visible = false;
+            btnAddBook.Visible = false;
+            btnEditBook.Visible = false;
+            btnDeleteBook.Visible = false;
         }
 
         private void dtgrdDisplayBook_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -80,24 +71,30 @@ namespace WinFormsApp_BookManagementSystem
 
         private void btnSelectThisRecord_Click(object sender, EventArgs e)
         {
-            switch (cmboWhatToDo.Text)
+            if (!bookRepo.ISBNInDatabase(Int64.Parse(txtISBNToSelect.Text)))
             {
-                case "Edit a Book":
-                    lblUpdateMessage.Text = "Below is the record you selected.\nEdit the fields that need to\nbe updated and then click the \nEdit Book button";
-                    lblUpdateMessage.Visible = true;
-                    tblFormFields.Visible = true;
-                    btnEditBook.Visible = true;
-                    break;
-                case "Delete a Book":
-                    lblUpdateMessage.Text = "Below is the record you selected.\nIf you are sure you want to\ndelete this record, then click the \nDelete Book button";
-                    lblUpdateMessage.Visible = true;
-                    tblFormFields.Visible = true;
-                    txtISBN.Enabled = false;
-                    txtTitle.Enabled = false;
-                    txtAuthor.Enabled = false;
-                    dttmReleaseDate.Enabled = false;
-                    btnDeleteBook.Visible = true;
-                    break;
+                MessageBox.Show("This ISBN is not in your records. Please select again from grid");
+                txtISBNToSelect.Clear();
+            }
+            else 
+            {
+                switch (cmboWhatToDo.Text)
+                {
+                    case "Edit a Book":
+                        lblUpdateMessage.Text = "Below is the record you selected.\nEdit the fields that need to\nbe updated and then click the \nEdit Book button";
+                        lblUpdateMessage.Visible = true;
+                        tblFormFields.Enabled = true;
+                        tblFormFields.Visible = true;
+                        btnEditBook.Visible = true;
+                        break;
+                    case "Delete a Book":
+                        lblUpdateMessage.Text = "Below is the record you selected.\nIf you are sure you want to\ndelete this record, then click the \nDelete Book button";
+                        lblUpdateMessage.Visible = true;
+                        tblFormFields.Enabled = false;
+                        tblFormFields.Visible = true;
+                        btnDeleteBook.Visible = true;
+                        break;
+                }
             }
         }
 
@@ -106,23 +103,56 @@ namespace WinFormsApp_BookManagementSystem
             if (!string.IsNullOrEmpty(txtISBN.Text) && !string.IsNullOrEmpty(txtTitle.Text) && 
                 !string.IsNullOrEmpty(txtAuthor.Text))
             {
-                Book bookToAdd = new Book();
-                bookToAdd.ISBN = Int64.Parse(txtISBN.Text);
-                bookToAdd.Title = txtTitle.Text;
-                bookToAdd.Author = txtAuthor.Text;
-                bookToAdd.ReleaseDate = (DateTime)dttmReleaseDate.Value;
-                bookRepo.AddRecord(bookToAdd);
-                RefreshAddRecord();
+                if (bookRepo.ISBNInDatabase(Int64.Parse(txtISBN.Text)))
+                {
+                    MessageBox.Show("Cannot add this record. A record with this ISBN already exists.");
+                    txtISBN.Clear();
+                }
+                else
+                {
+                    Book bookToAdd = new Book();
+                    bookToAdd.ISBN = Int64.Parse(txtISBN.Text);
+                    bookToAdd.Title = txtTitle.Text;
+                    bookToAdd.Author = txtAuthor.Text;
+                    bookToAdd.ReleaseDate = (DateTime)dttmReleaseDate.Value.Date;
+                    bookRepo.AddRecord(bookToAdd);
+                    MessageBox.Show("Record Added");
+                    dtgrdDisplayBook.DataSource = null;
+                    dtgrdDisplayBook.DataSource = bookRepo.GetAllRecords();
+                    ClearFields();
+                }
             }
             else
             {
-                MessageBox.Show("VIN, Make and Model cannot be blank.");
+                MessageBox.Show("All fields must be filled");
             }
         }
 
+        void ClearFields()
+        {
+            txtISBN.Clear();
+            txtAuthor.Clear();
+            txtTitle.Clear();
+            dttmReleaseDate.Value = DateTime.Today;
+        }
         private void btnEditBook_Click(object sender, EventArgs e)
         {
-
+            if (!string.IsNullOrEmpty(txtISBN.Text) && !string.IsNullOrEmpty(txtTitle.Text) &&
+                            !string.IsNullOrEmpty(txtAuthor.Text))
+            {
+                Book bookToEdit = bookRepo.FindRecord(Int64.Parse(txtISBNToSelect.Text));
+                bookToEdit.ISBN = Int64.Parse(txtISBN.Text);
+                bookToEdit.Title = txtTitle.Text;
+                bookToEdit.Author = txtAuthor.Text;
+                bookToEdit.ReleaseDate = (DateTime)dttmReleaseDate.Value;
+                bookRepo.UpdateRecord(Int64.Parse(txtISBNToSelect.Text), bookToEdit);
+                dtgrdDisplayBook.DataSource = null;
+                dtgrdDisplayBook.DataSource = bookRepo.GetAllRecords();
+            }
+            else
+            {
+                MessageBox.Show("All fields must be filled");
+            }
         }
 
         private void btnDeleteBook_Click(object sender, EventArgs e)
@@ -133,30 +163,20 @@ namespace WinFormsApp_BookManagementSystem
             }
             else if (!bookRepo.ISBNInDatabase(Int64.Parse(txtISBN.Text)))
             {
-                MessageBox.Show("A record with this ISBN does not exist. Cannot delete.");
+                MessageBox.Show("A record with this ISBN does not exist. It may have already been deleted.");
             }
             else
             {
                 bookRepo.DeleteRecord(bookRepo.FindRecord(Int64.Parse(txtISBN.Text)));
                 MessageBox.Show("Record deleted");
-                txtISBN.Enabled = false;
-                txtTitle.Enabled = false;
-                txtAuthor.Enabled = false;
-                dttmReleaseDate.Enabled = false;
-                btnDeleteBook.Visible = true;
+                btnDeleteBook.Visible = false;
+                lblUpdateMessage.Visible = false;
+                tblFormFields.Visible = false;
                 dtgrdDisplayBook.DataSource = null;
                 dtgrdDisplayBook.DataSource = bookRepo.GetAllRecords();
             }
         }
 
-        private void txtISBNToSelect_TextChanged(object sender, EventArgs e)
-        {
-            lblUpdateMessage.Visible = false;
-            tblFormFields.Visible = false;
-            btnAddBook.Visible = false;
-            btnEditBook.Visible = false;
-            btnDeleteBook.Visible = false;
-        }
 
         private void txtISBN_Validating(object sender, CancelEventArgs e)
         {
