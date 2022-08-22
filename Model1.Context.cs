@@ -13,10 +13,10 @@ namespace WinFormsApp_BookManagementSystem
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class BookDBEntities : DbContext
+    public partial class BookDBEntities1 : DbContext
     {
-        public BookDBEntities()
-            : base("name=BookDBEntities")
+        public BookDBEntities1()
+            : base("name=BookDBEntities1")
         {
         }
     

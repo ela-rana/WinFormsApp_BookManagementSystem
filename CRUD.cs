@@ -49,11 +49,11 @@ namespace WinFormsApp_BookManagementSystem
     }
     class BookRepo : CRUD
     {
-        BookDBEntities entities;
+        BookDBEntities1 entities;
 
         public BookRepo()
         {
-            entities = new BookDBEntities();
+            entities = new BookDBEntities1();
         }
         public void AddRecord(Book book)
         {

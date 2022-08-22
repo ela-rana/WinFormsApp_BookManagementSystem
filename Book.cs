@@ -17,6 +17,6 @@ namespace WinFormsApp_BookManagementSystem
         public long ISBN { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
-        public Nullable<System.DateTime> ReleaseDate { get; set; }
+        public System.DateTime ReleaseDate { get; set; }
     }
 }
